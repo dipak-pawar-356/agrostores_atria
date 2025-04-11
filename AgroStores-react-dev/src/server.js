@@ -1,4 +1,6 @@
 import { Server, Model, RestSerializer } from "miragejs";
+import { nurseries } from "./backend/db/nurseries";
+
 import {
   loginHandler,
   signupHandler,
@@ -23,6 +25,10 @@ import {
   getWishlistItemsHandler,
   removeItemFromWishlistHandler,
 } from "./backend/controllers/WishlistController";
+import {
+  getAllNurseriesHandler,
+  getNurseryByIdHandler,
+} from "./backend/controllers/NurseryController";
 import { categories } from "./backend/db/categories";
 import { products } from "./backend/db/products";
 import { users } from "./backend/db/users";
@@ -39,11 +45,12 @@ export function makeServer({ environment = "development" } = {}) {
       user: Model,
       cart: Model,
       wishlist: Model,
+      nursery: Model,
     },
 
     // Runs on the start of the server
     seeds(server) {
-      // disballing console logs from Mirage
+      // disabling console logs from Mirage
       server.logging = false;
       products.forEach((item) => {
         server.create("product", { ...item });
@@ -52,6 +59,8 @@ export function makeServer({ environment = "development" } = {}) {
       users.forEach((item) =>
         server.create("user", { ...item, cart: [], wishlist: [] })
       );
+
+      nurseries.forEach((item) => server.create("nursery", { ...item }));
 
       categories.forEach((item) => server.create("category", { ...item }));
     },
@@ -79,6 +88,12 @@ export function makeServer({ environment = "development" } = {}) {
         removeItemFromCartHandler.bind(this)
       );
       this.delete("/user/clearCart", clearCartHandler.bind(this));
+
+      // nursery routes (public)
+      this.get("/nurseries", getAllNurseriesHandler.bind(this));
+      this.get("/nurseries/:nurseryId", getNurseryByIdHandler.bind(this));
+      this.namespace = "api";
+  
 
       // wishlist routes (private)
       this.get("/user/wishlist", getWishlistItemsHandler.bind(this));

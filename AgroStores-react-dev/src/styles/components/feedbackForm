@@ -1,0 +1,38 @@
+/* filepath: src/styles/components/feedbackForm.css */
+.feedback-form {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.feedback-form h2 {
+  text-align: center;
+}
+
+.feedback-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.feedback-form button {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.feedback-form button:hover {
+  background-color: #45a049;
+}

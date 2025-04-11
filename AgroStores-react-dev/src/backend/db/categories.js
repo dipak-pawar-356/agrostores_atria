@@ -45,4 +45,10 @@ export const categories = [
     description:"Sensors, testers, torch & gadgets for farming",
      imgSrc:"https://res.cloudinary.com/dvuh4fz9d/image/upload/v1648397135/probeInSoil_1_cropped_s81abe.jpg",
   },
+  {
+    _id: uuid(),
+    categoryName: "Nurseries",
+    description: "Connect with nurseries for seeds, fertilizers, and more.",
+    imgSrc: "../assets/images/nursery.jpg",
+  },
 ];

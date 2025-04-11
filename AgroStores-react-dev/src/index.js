@@ -12,6 +12,10 @@ import { AddressProvider } from "./context/address-context";
 // Call make Server
 makeServer();
 
+if (process.env.NODE_ENV === "development") {
+  makeServer({ environment: "development" });
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>

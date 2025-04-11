@@ -7,6 +7,8 @@ import { GetProductById } from "../services/getProductById";
 import { IsItemInCart } from "../utils/isItemInCart";
 import { IsItemInWishList } from "../utils/isItemInWishList";
 import { addItemToCart } from "../services/cartServices";
+import { FeedbackForm } from "../components/FeedbackForm";
+import { useState, useEffect } from "react";
 
 import {
   addItemToWishlist,
@@ -26,6 +28,10 @@ export const SingleProductPage = () => {
   const inWishList = IsItemInWishList(productId);
   const inCart = IsItemInCart(productId);
   const { pathname } = useLocation();
+
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+  const [feedbacks, setFeedbacks] = useState([]);
+
   const {
     _id,
     title,
@@ -39,6 +45,13 @@ export const SingleProductPage = () => {
     description,
   } = product;
 
+  // Fetch feedbacks for the product
+  useEffect(() => {
+    fetch(`/api/feedback/${productId}`)
+      .then((res) => res.json())
+      .then((data) => setFeedbacks(data.feedbacks));
+  }, [productId]);
+
   return (
     <div className="single-product-page flex-column">
       <Navbar />
@@ -46,7 +59,7 @@ export const SingleProductPage = () => {
       {!loader && (
         <>
           <div className="product-box flex" id={_id}>
-            <img className="product-img" src={imgUrl} />
+            <img className="product-img" src={imgUrl} alt={title} />
             <div className="product-info flex-column ">
               <h2 className="single-product-title">{title}</h2>
               <p className="card-ratings">
@@ -126,6 +139,13 @@ export const SingleProductPage = () => {
                   </button>
                 )}
               </div>
+              <button
+                className="btn btn-solid-icon fw-bold"
+                onClick={() => setShowFeedbackForm(true)}
+              >
+                <i className="material-icons">feedback</i>
+                <span>Give Feedback</span>
+              </button>
             </div>
           </div>
           <div className="product-description-box flex">
@@ -143,6 +163,30 @@ export const SingleProductPage = () => {
                 ))}
             </div>
           </div>
+
+          {/* Feedback Form */}
+          {showFeedbackForm && (
+            <FeedbackForm
+            productId={productId}
+            onClose={() => setShowFeedbackForm(false)}
+            feedbacks={feedbacks}
+          />
+          )}
+
+          {/* Feedback Section */}
+          <div className="feedback-section">
+            <h3>Feedback</h3>
+            {feedbacks.map((fb) => (
+              <div key={fb._id} className="feedback-card">
+                <p><strong>{fb.userName}</strong></p>
+                <p>{fb.text}</p>
+                {fb.image && <img src={fb.image} alt="Feedback" />}
+                {fb.video && <video src={fb.video} controls />}
+                <p>Rating: {fb.rating} ⭐</p>
+              </div>
+            ))}
+          </div>
+
           <Footer />
         </>
       )}

@@ -15,6 +15,8 @@ import { MyProfile } from "../pages/MyProfile";
 import { OrderSuccessPage } from "../pages/OrderSuccessPage";
 import { SearchPage } from "../pages/SearchPage";
 import { ErrorPage } from "../pages/ErrorPage";
+import { NurseryDetails } from "../pages/NurseryDetails"; // Import NurseryDetails
+import { Nurseries } from "../pages/Nurseries"; // Import Nurseries
 
 export const PageRoutes = () => {
   return (
@@ -39,6 +41,8 @@ export const PageRoutes = () => {
         />
       </Route>
       <Route path="/mock" element={<Mockman />} />
+      <Route path="/nurseries" element={<Nurseries />} /> {/* List of nurseries */}
+      <Route path="/nurseries/:id" element={<NurseryDetails />} /> {/* Nursery details */}
     </Routes>
   );
 };

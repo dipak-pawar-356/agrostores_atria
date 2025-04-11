@@ -1,4 +1,4 @@
-// File: src/services/chatService.js
+// src/services/chatService.js
 
 export const sendMessageToGemini = async (userInput) => {
   try {

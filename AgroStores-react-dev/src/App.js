@@ -3,7 +3,8 @@ import "./styles/utilities/variables.css";
 import { PageRoutes } from "./routes/PageRoutes";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import ChatBot from "./components/ChatBot";
+import ChatBot from "./components/Chatbot.js";
+
 
 function App() {
   return (
